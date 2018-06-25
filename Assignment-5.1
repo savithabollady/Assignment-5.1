@@ -1,1 +1,40 @@
-# Assignment-5.1
+1. How many vowels are there in the names of USA States?
+2. Visualize the vowels distribution.
+
+ANSWER:
+library(stringr)
+#total number of a's
+str_count(USArrests$X, "a")
+
+#the number of a’s like this:
+str_count(tolower(USArrests$X), "a")
+#Once we know how to do it for one vowel, 
+#we can do the same for all the vowels:
+a<- str_count(tolower(USArrests$X), "a")
+e<- str_count(tolower(USArrests$X), "e")
+i<- str_count(tolower(USArrests$X), "i")
+o<-str_count(tolower(USArrests$X), "o")
+u<- str_count(tolower(USArrests$X), "u")
+# vector of vowels
+vowels = c("a", "e", "i", "o", "u")
+# vector for storing results
+num_vowels = vector(mode = "integer", length = 5)
+
+# calculate number of vowels in each name
+for (j in seq_along(vowels)) {num_aux = str_count(tolower(USArrests$X), vowels[j])
+num_vowels[j] = sum(num_aux)
+}
+names(num_vowels) = vowels
+# total number of vowels
+num_vowels
+## a e i o u
+## 61 28 44 36 8
+# sort them in decreasing order
+sort(num_vowels, decreasing = TRUE)
+## a i o e u
+## 61 44 36 28 8
+
+#And finally, we can visualize the distribution with a barplot:
+barplot(num_vowels, main = "Number of vowels in USA States names",
+        border = NA, ylim = c(0, 80))
+  
